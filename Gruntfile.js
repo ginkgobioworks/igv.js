@@ -1,4 +1,5 @@
 module.exports = function (grunt) {
+    require("load-grunt-tasks")(grunt);
 
     // 1. All configuration goes here
     grunt.initConfig({
@@ -83,6 +84,18 @@ module.exports = function (grunt) {
                 dest: 'dist/igv.esm.min.js'
             }
         },
+        babel: {
+            options: {
+                sourceMap: true,
+                presets: ['es2015']
+            },
+            dist: {
+                files: {
+                    'dist/igv.esm.js': 'dist/igv.esm.js',
+                    'dist/igv.js': 'dist/igv.js',
+                }
+            }
+        }
 
     });
 
@@ -91,7 +104,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify-es');
 
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
-    grunt.registerTask('default', [ 'concat:css', 'embed-css', 'concat:igv', 'concat:igv_es6', 'uglify:igv', 'uglify:igv_esm']);
+    grunt.registerTask('default', [ 'concat:css', 'embed-css', 'concat:igv', 'concat:igv_es6', 'babel', 'uglify:igv', 'uglify:igv_esm']);
 
     grunt.registerTask('doc', ['md2html']);
 
